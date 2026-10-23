@@ -214,33 +214,34 @@
           allowfullscreen>
         </iframe>
 
-        <!-- Facade / Couverture avec Bouton Play Animé et Flottant -->
+        <!-- Facade / Couverture avec Bouton Play Animé (Miniature officielle exacte de la présentation préservée) -->
         <div id="video-facade" class="absolute inset-0 z-10 bg-bgDark flex flex-col items-center justify-center cursor-pointer transition-opacity duration-300" onclick="playPresentationVideo()">
-          <!-- Fond miniature avec gradient sombre -->
+          <!-- Miniature officielle originale de la présentation YouTube -->
           <img 
-            src="images/espoir-hero.webp" 
-            alt="Présentation Espoir Chinois" 
-            class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-75 transition-opacity duration-300"
+            src="images/miniature-video-presentation.jpg" 
+            alt="Miniature officielle - 5 Jours Pour Décoder Le Chinois" 
+            class="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
           >
-          <div class="absolute inset-0 bg-gradient-to-t from-bgDark via-bgDark/40 to-black/30"></div>
+          <!-- Voile très subtil pour faire flotter le bouton play sans masquer le texte ni le visage de la miniature -->
+          <div class="absolute inset-0 bg-black/15 group-hover:bg-black/5 transition-colors duration-300"></div>
 
-          <!-- Bouton Play Animé (Agrandie sur mobile et flottant/animé) -->
-          <div class="relative z-20 flex flex-col items-center gap-3 sm:gap-4 p-4 text-center">
+          <!-- Bouton Play Animé & Flottant (Optimisé desktop & mobile) -->
+          <div class="relative z-20 flex flex-col items-center gap-2.5 sm:gap-4 p-2 sm:p-4 text-center">
             <div class="relative flex items-center justify-center">
               <!-- Ripple ring -->
-              <span class="absolute w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gold/25 animate-ping pointer-events-none"></span>
+              <span class="absolute w-16 h-16 sm:w-24 sm:h-24 rounded-full bg-gold/30 animate-ping pointer-events-none"></span>
               <!-- Main Play Button -->
               <button 
                 type="button"
                 aria-label="Lancer la vidéo" 
-                class="video-play-pulse w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-[#D72638] via-gold to-[#FFE27A] text-bgDark flex items-center justify-center shadow-gold-glow active:scale-95 transition-transform"
+                class="video-play-pulse w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-[#D72638] via-gold to-[#FFE27A] text-bgDark flex items-center justify-center shadow-gold-glow active:scale-95 transition-transform"
               >
-                <i data-lucide="play" class="w-7 h-7 sm:w-9 sm:h-9 fill-bgDark text-bgDark ml-1 flex-shrink-0"></i>
+                <i data-lucide="play" class="w-6 h-6 sm:w-9 sm:h-9 fill-bgDark text-bgDark ml-1 flex-shrink-0"></i>
               </button>
             </div>
 
-            <!-- Badge interactif -->
-            <div class="px-4 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white font-mono text-xs sm:text-sm font-semibold tracking-wide flex items-center gap-2 group-hover:border-gold/50 transition-colors shadow-lg">
+            <!-- Badge interactif compact et lisible -->
+            <div class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white font-mono text-[11px] sm:text-sm font-semibold tracking-wide flex items-center gap-1.5 sm:gap-2 group-hover:border-gold/50 transition-colors shadow-xl">
               <span class="w-2 h-2 rounded-full bg-chineseRed animate-pulse"></span>
               <span>Regarder la présentation (2 min)</span>
             </div>
@@ -544,28 +545,28 @@
     </div>
 
     <!-- Vertical Timeline Dynamique avec jauge dorée animée au scroll -->
-    <div id="programme-timeline" class="relative ml-2 sm:ml-8 md:ml-12 pl-12 sm:pl-16 space-y-12">
+    <div id="programme-timeline" class="relative ml-1 sm:ml-8 md:ml-12 pl-11 sm:pl-16 space-y-8 sm:space-y-12">
       <!-- Piste d'arrière-plan statique -->
-      <div class="absolute left-[14px] sm:left-[18px] top-5 bottom-8 w-[4px] bg-white/[0.08] rounded-full pointer-events-none z-0"></div>
+      <div class="absolute left-[13px] sm:left-[18px] top-5 bottom-8 w-[4px] bg-white/[0.08] rounded-full pointer-events-none z-0"></div>
 
       <!-- Ligne active qui jaunit et charge vers le bas au fil du défilement -->
-      <div id="timeline-fill" class="absolute left-[14px] sm:left-[18px] top-5 w-[4px] bg-gradient-to-b from-gold via-[#FFE27A] to-gold shadow-[0_0_18px_rgba(245,197,66,0.95)] rounded-full pointer-events-none transition-all duration-75 ease-out z-0" style="height: 0%;"></div>
+      <div id="timeline-fill" class="absolute left-[13px] sm:left-[18px] top-5 w-[4px] bg-gradient-to-b from-gold via-[#FFE27A] to-gold shadow-[0_0_18px_rgba(245,197,66,0.95)] rounded-full pointer-events-none transition-all duration-75 ease-out z-0" style="height: 0%;"></div>
 
       <!-- Day 1 -->
       <div class="relative group">
         <!-- Dot on timeline with animated glowing pulse -->
-        <div class="timeline-step-dot absolute -left-[48px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-1 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
+        <div class="timeline-step-dot absolute -left-[44px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-1 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
           1
         </div>
-        <div class="p-6 sm:p-8 rounded-3xl bg-bgCard border border-white/[0.06] group-hover:border-gold/30 transition-colors shadow-lg">
+        <div class="p-4 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl bg-bgCard border border-white/[0.06] group-hover:border-gold/30 transition-colors shadow-lg">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-mono uppercase tracking-widest text-gold font-bold">JOUR 1 // LES FONDATIONS</span>
             <span class="text-xs font-mono text-textMuted">1h30 Live Zoom</span>
           </div>
-          <h3 class="font-display text-2xl sm:text-3xl text-white uppercase mb-3">
+          <h3 class="font-display text-xl sm:text-2xl md:text-3xl text-white uppercase mb-2 sm:mb-3">
             Les bases : sons, tons et premiers mots
           </h3>
-          <p class="text-sm sm:text-base text-textMuted leading-relaxed">
+          <p class="text-xs sm:text-sm md:text-base text-textMuted leading-relaxed">
             Tu comprends comment fonctionne la prononciation chinoise (sans stress), comment lire le pinyin et comment utiliser tes premières phrases essentielles.
           </p>
         </div>
@@ -573,18 +574,18 @@
 
       <!-- Day 2 -->
       <div class="relative group">
-        <div class="timeline-step-dot absolute -left-[48px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-2 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
+        <div class="timeline-step-dot absolute -left-[44px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-2 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
           2
         </div>
-        <div class="p-6 sm:p-8 rounded-3xl bg-bgCard border border-white/[0.06] group-hover:border-gold/30 transition-colors shadow-lg">
+        <div class="p-4 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl bg-bgCard border border-white/[0.06] group-hover:border-gold/30 transition-colors shadow-lg">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-mono uppercase tracking-widest text-gold font-bold">JOUR 2 // IDENTITÉ & RENCONTRES</span>
             <span class="text-xs font-mono text-textMuted">1h30 Live Zoom</span>
           </div>
-          <h3 class="font-display text-2xl sm:text-3xl text-white uppercase mb-3">
+          <h3 class="font-display text-xl sm:text-2xl md:text-3xl text-white uppercase mb-2 sm:mb-3">
             Savoir se présenter simplement
           </h3>
-          <p class="text-sm sm:text-base text-textMuted leading-relaxed">
+          <p class="text-xs sm:text-sm md:text-base text-textMuted leading-relaxed">
             Dire ton nom, demander le nom de quelqu'un, dire d'où tu viens, ton niveau de chinois… Les premiers réflexes d'une conversation humaine réussie.
           </p>
         </div>
@@ -592,18 +593,18 @@
 
       <!-- Day 3 -->
       <div class="relative group">
-        <div class="timeline-step-dot absolute -left-[48px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-3 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
+        <div class="timeline-step-dot absolute -left-[44px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-3 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
           3
         </div>
-        <div class="p-6 sm:p-8 rounded-3xl bg-bgCard border border-white/[0.06] group-hover:border-gold/30 transition-colors shadow-lg">
+        <div class="p-4 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl bg-bgCard border border-white/[0.06] group-hover:border-gold/30 transition-colors shadow-lg">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-mono uppercase tracking-widest text-gold font-bold">JOUR 3 // SITUATIONS DU QUOTIDIEN</span>
             <span class="text-xs font-mono text-textMuted">1h30 Live Zoom</span>
           </div>
-          <h3 class="font-display text-2xl sm:text-3xl text-white uppercase mb-3">
+          <h3 class="font-display text-xl sm:text-2xl md:text-3xl text-white uppercase mb-2 sm:mb-3">
             Les phrases utiles pour survivre en Chine
           </h3>
-          <p class="text-sm sm:text-base text-textMuted leading-relaxed">
+          <p class="text-xs sm:text-sm md:text-base text-textMuted leading-relaxed">
             Prix, directions, toilettes, compréhension, demandes simples : tout ce qui est vraiment utile pour te débrouiller dans la rue, les marchés ou les boutiques.
           </p>
         </div>
@@ -611,18 +612,18 @@
 
       <!-- Day 4 -->
       <div class="relative group">
-        <div class="timeline-step-dot absolute -left-[48px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-4 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
+        <div class="timeline-step-dot absolute -left-[44px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-4 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
           4
         </div>
-        <div class="p-6 sm:p-8 rounded-3xl bg-bgCard border border-white/[0.06] group-hover:border-gold/30 transition-colors shadow-lg">
+        <div class="p-4 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl bg-bgCard border border-white/[0.06] group-hover:border-gold/30 transition-colors shadow-lg">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-mono uppercase tracking-widest text-gold font-bold">JOUR 4 // FLUIDITÉ SOCIALE</span>
             <span class="text-xs font-mono text-textMuted">1h30 Live Zoom</span>
           </div>
-          <h3 class="font-display text-2xl sm:text-3xl text-white uppercase mb-3">
+          <h3 class="font-display text-xl sm:text-2xl md:text-3xl text-white uppercase mb-2 sm:mb-3">
             Interaction et phrases sociales
           </h3>
-          <p class="text-sm sm:text-base text-textMuted leading-relaxed">
+          <p class="text-xs sm:text-sm md:text-base text-textMuted leading-relaxed">
             Réagir avec naturel, montrer que tu comprends (ou pas), demander de répéter, encourager, prévenir… Tu deviens un interlocuteur agréable et actif.
           </p>
         </div>
@@ -630,18 +631,18 @@
 
       <!-- Day 5 -->
       <div class="relative group">
-        <div class="timeline-step-dot absolute -left-[48px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gold text-bgDark flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-5 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
+        <div class="timeline-step-dot absolute -left-[44px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gold text-bgDark flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-5 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
           5
         </div>
-        <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-bgCard to-[#1F1A12] border-2 border-gold/40 transition-colors shadow-xl">
+        <div class="p-4 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-bgCard to-[#1F1A12] border-2 border-gold/40 transition-colors shadow-xl">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-mono uppercase tracking-widest text-gold font-bold">JOUR 5 // CONSÉCRATION & CERTIFICATION</span>
             <span class="text-xs font-mono text-gold/80">1h30 Live Zoom + Certificat</span>
           </div>
-          <h3 class="font-display text-2xl sm:text-3xl text-white uppercase mb-3">
+          <h3 class="font-display text-xl sm:text-2xl md:text-3xl text-white uppercase mb-2 sm:mb-3">
             La mini-conversation complète
           </h3>
-          <p class="text-sm sm:text-base text-textMuted leading-relaxed mb-4">
+          <p class="text-xs sm:text-sm md:text-base text-textMuted leading-relaxed mb-4">
             Salutation → présentation → échange → réactions → questions simples. Tu tiens un dialogue fluide de bout en bout. Et tu reçois ton attestation officielle de participation.
           </p>
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/15 text-gold text-xs font-mono font-semibold">
