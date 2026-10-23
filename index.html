@@ -1381,45 +1381,55 @@
        15. FOOTER
   ========================================================================= -->
   <footer class="pt-16 pb-28 md:py-16 px-5 sm:px-6 bg-bgDark border-t border-white/[0.08] relative z-20">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
-      <!-- Brand & Description -->
-      <div class="flex flex-col items-center md:items-start gap-2">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg bg-gold/15 border border-gold/40 flex items-center justify-center text-gold font-chinese font-bold text-sm">
-            中
+    <div class="max-w-6xl mx-auto space-y-10">
+      <!-- Ligne 1 : Marque + Réseaux sociaux (non cliquables) -->
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+        <!-- Logo & Titre "5 Jours Pour Décoder Le Chinois" -->
+        <div class="flex flex-col items-center md:items-start gap-2">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-gold/15 border border-gold/40 flex items-center justify-center text-gold font-chinese font-bold text-sm shadow-[0_0_12px_rgba(245,197,66,0.2)]">
+              中
+            </div>
+            <span class="font-display text-xl sm:text-2xl tracking-wider text-white uppercase">5 Jours Pour Décoder Le Chinois</span>
           </div>
-          <span class="font-display text-2xl tracking-wider text-white">ESPOIR CHINOIS</span>
+          <p class="text-xs text-textMuted max-w-sm">
+            Formation intensive au chinois mandarin. Méthode pratique pour francophones en Europe et au Canada.
+          </p>
         </div>
-        <p class="text-xs text-textMuted max-w-sm">
-          Formation intensive au chinois mandarin. Méthode pratique pour francophones en Europe et au Canada.
-        </p>
+
+        <!-- Réseaux Sociaux (Informatifs / Non cliquables) -->
+        <div class="flex items-center gap-3 sm:gap-4 select-none pointer-events-none" aria-label="Réseaux sociaux officiels">
+          <div class="w-10 h-10 rounded-full bg-bgCard border border-white/[0.08] flex items-center justify-center text-textMuted/70" title="Facebook">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </div>
+          <div class="w-10 h-10 rounded-full bg-bgCard border border-white/[0.08] flex items-center justify-center text-textMuted/70" title="TikTok">
+            <i data-lucide="video" class="w-4 h-4"></i>
+          </div>
+          <div class="w-10 h-10 rounded-full bg-bgCard border border-white/[0.08] flex items-center justify-center text-textMuted/70" title="YouTube">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </div>
+          <div class="w-10 h-10 rounded-full bg-bgCard border border-white/[0.08] flex items-center justify-center text-textMuted/70" title="Email">
+            <i data-lucide="mail" class="w-4 h-4"></i>
+          </div>
+        </div>
       </div>
 
-      <!-- Social Links -->
-      <div class="flex items-center gap-4 sm:gap-5">
-        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-bgCard border border-white/[0.08] flex items-center justify-center text-textMuted hover:text-white hover:border-gold transition-colors" title="Facebook">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        </a>
-        <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-bgCard border border-white/[0.08] flex items-center justify-center text-textMuted hover:text-white hover:border-gold transition-colors" title="TikTok">
-          <i data-lucide="video" class="w-4 h-4"></i>
-        </a>
-        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-bgCard border border-white/[0.08] flex items-center justify-center text-textMuted hover:text-white hover:border-gold transition-colors" title="YouTube">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-        </a>
-        <a href="mailto:contact@espoirchinois.com" class="w-10 h-10 rounded-full bg-bgCard border border-white/[0.08] flex items-center justify-center text-textMuted hover:text-white hover:border-gold transition-colors" title="Contact Email">
-          <i data-lucide="mail" class="w-4 h-4"></i>
-        </a>
-      </div>
-
-      <!-- Copyright & Legal -->
-      <div class="flex flex-col items-center md:items-end gap-1 text-xs text-textMuted font-mono">
+      <!-- Ligne 2 : Copyright & Liens Légaux (Sur la MÊME ligne sur ordinateur) -->
+      <div class="pt-6 border-t border-white/[0.06] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-textMuted font-mono">
         <div>© <span id="current-year">2026</span> Espoir Chinois. Tous droits réservés.</div>
-        <div class="flex flex-wrap justify-center gap-3 sm:gap-4 text-[11px] text-textMuted/60">
-          <a href="#" class="hover:text-gold transition-colors">Mentions légales</a>
+        
+        <div class="flex flex-wrap md:flex-nowrap items-center justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs text-textMuted/70 whitespace-nowrap">
+          <button type="button" onclick="openLegalModal('mentions')" class="hover:text-gold transition-colors underline-offset-4 hover:underline cursor-pointer">
+            Mentions légales
+          </button>
           <span>•</span>
-          <a href="#" class="hover:text-gold transition-colors">Politique de confidentialité</a>
+          <button type="button" onclick="openLegalModal('confidentialite')" class="hover:text-gold transition-colors underline-offset-4 hover:underline cursor-pointer">
+            Politique de confidentialité
+          </button>
           <span>•</span>
-          <a href="#" class="hover:text-gold transition-colors">Conditions Générales</a>
+          <button type="button" onclick="openLegalModal('cgv')" class="hover:text-gold transition-colors underline-offset-4 hover:underline cursor-pointer">
+            Conditions Générales
+          </button>
         </div>
       </div>
     </div>
@@ -1458,6 +1468,118 @@
       <p class="text-xs text-textMuted font-mono mt-3 text-center">
         Témoignage authentique certifié par Espoir Chinois
       </p>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       LEGAL MODAL (Mentions Légales, Politique de Confidentialité, CGV)
+  ========================================================================= -->
+  <div id="legal-modal" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6" onclick="if(event.target === this) closeLegalModal()">
+    <div class="relative max-w-2xl w-full max-h-[85vh] overflow-hidden bg-bgCard border border-white/[0.1] rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col">
+      <!-- Header -->
+      <div class="p-5 sm:p-6 border-b border-white/[0.08] flex items-center justify-between bg-bgDark">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 rounded bg-gold/15 text-gold flex items-center justify-center font-bold text-xs font-chinese">中</div>
+          <h3 id="legal-modal-title" class="font-display text-xl sm:text-2xl text-white uppercase tracking-wider">
+            Informations Légales
+          </h3>
+        </div>
+        <button onclick="closeLegalModal()" class="w-9 h-9 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-textMuted hover:text-white flex items-center justify-center transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Navigation tabs -->
+      <div class="flex border-b border-white/[0.06] bg-bgDark/50 px-5 sm:px-6 gap-2 sm:gap-4 overflow-x-auto">
+        <button onclick="showLegalTab('mentions')" id="tab-btn-mentions" class="py-3 px-2 text-xs sm:text-sm font-mono border-b-2 font-bold whitespace-nowrap transition-colors border-gold text-gold">
+          Mentions légales
+        </button>
+        <button onclick="showLegalTab('confidentialite')" id="tab-btn-confidentialite" class="py-3 px-2 text-xs sm:text-sm font-mono border-b-2 font-bold whitespace-nowrap transition-colors border-transparent text-textMuted hover:text-white">
+          Confidentialité
+        </button>
+        <button onclick="showLegalTab('cgv')" id="tab-btn-cgv" class="py-3 px-2 text-xs sm:text-sm font-mono border-b-2 font-bold whitespace-nowrap transition-colors border-transparent text-textMuted hover:text-white">
+          Conditions Générales (CGV)
+        </button>
+      </div>
+
+      <!-- Content (Scrollable) -->
+      <div class="p-5 sm:p-8 overflow-y-auto space-y-6 text-xs sm:text-sm text-textMain/90 leading-relaxed font-sans">
+        <!-- 1. MENTIONS LÉGALES -->
+        <div id="legal-content-mentions" class="space-y-4">
+          <h4 class="font-display text-lg text-gold uppercase">1. Éditeur du site</h4>
+          <p>
+            Le site officiel de la formation <strong>« 5 Jours Pour Décoder Le Chinois »</strong> est édité par Espoir Chinois, formateur et créateur de contenu éducatif en langue chinoise.
+          </p>
+          <div class="p-4 rounded-xl bg-bgDark border border-white/[0.06] space-y-1 font-mono text-xs text-textMuted">
+            <div><strong class="text-white">Responsable de publication :</strong> Espoir Chinois</div>
+            <div><strong class="text-white">Contact officiel :</strong> contact@espoirchinois.com</div>
+            <div><strong class="text-white">Activité :</strong> Formation en ligne & coaching linguistique en mandarin</div>
+          </div>
+
+          <h4 class="font-display text-lg text-gold uppercase pt-2">2. Hébergement</h4>
+          <p>
+            Le site est hébergé par les infrastructures cloud sécurisées de Vercel Inc. (440 N Barranca Ave #4133, Covina, CA 91723) et GitHub Inc. (88 Colin P Kelly Jr St, San Francisco, CA 94107).
+          </p>
+
+          <h4 class="font-display text-lg text-gold uppercase pt-2">3. Propriété intellectuelle</h4>
+          <p>
+            L'ensemble des contenus présents sur ce site (textes, programme des 5 jours, méthodes pédagogiques, visuels, vidéos, livre de 238 pages « 30 phrases pour commencer à parler chinois ») sont la propriété exclusive d'Espoir Chinois. Toute reproduction, diffusion, extraction ou utilisation non autorisée est strictement interdite.
+          </p>
+        </div>
+
+        <!-- 2. POLITIQUE DE CONFIDENTIALITÉ -->
+        <div id="legal-content-confidentialite" class="space-y-4 hidden">
+          <h4 class="font-display text-lg text-gold uppercase">1. Collecte des données personnelles</h4>
+          <p>
+            Dans le cadre de ton inscription à la formation, nous collectons uniquement les informations nécessaires au bon déroulement des cours et à la livraison de tes 7 bonus :
+          </p>
+          <ul class="list-disc pl-5 space-y-1 text-textMuted">
+            <li>Nom et prénom (pour ton attestation de participation officielle)</li>
+            <li>Adresse e-mail (pour l'envoi des liens Zoom quotidiens et des replays)</li>
+            <li>Numéro de téléphone / WhatsApp (pour l'accès au groupe d'entraide réservé)</li>
+          </ul>
+
+          <h4 class="font-display text-lg text-gold uppercase pt-2">2. Sécurité des paiements</h4>
+          <p>
+            Les transactions financières sont intégralement gérées par <strong>Stripe Inc.</strong>, leader mondial du paiement en ligne sécurisé certifié PCI-DSS niveau 1. <strong>Aucune coordonnée bancaire n'est stockée ni traitée sur nos propres serveurs.</strong>
+          </p>
+
+          <h4 class="font-display text-lg text-gold uppercase pt-2">3. Vos droits (RGPD)</h4>
+          <p>
+            Conformément aux réglementations sur la protection des données, tu disposes d'un droit d'accès, de rectification et de suppression de tes données. Tu peux exercer ce droit à tout moment par simple message à <strong>contact@espoirchinois.com</strong>.
+          </p>
+        </div>
+
+        <!-- 3. CONDITIONS GÉNÉRALES DE VENTE (CGV) -->
+        <div id="legal-content-cgv" class="space-y-4 hidden">
+          <h4 class="font-display text-lg text-gold uppercase">1. Objet de la formation</h4>
+          <p>
+            La formation <strong>« 5 Jours Pour Décoder Le Chinois »</strong> est un programme intensif d'initiation pratique au mandarin, comprenant 5 séances en direct de 1h30 sur Zoom, l'accès à vie aux replays, ainsi que les 7 bonus exclusifs offerts aux inscrits.
+          </p>
+
+          <h4 class="font-display text-lg text-gold uppercase pt-2">2. Tarifs et modalités de paiement</h4>
+          <p>
+            Le tarif applicable pour la 6ème cohorte est de <strong>99 € TTC</strong> (au lieu de 280 €). Ce paiement est unique et définitif, sans aucun abonnement caché ni frais récurrents.
+          </p>
+
+          <h4 class="font-display text-lg text-gold uppercase pt-2">3. Garantie personnelle d'Espoir Chinois</h4>
+          <p class="p-4 rounded-xl bg-bgDark border border-gold/30 text-white italic">
+            « Si tu n'arrives pas à assimiler les phrases apprises pendant la formation, Espoir Chinois s'engage personnellement à te corriger et te guider jusqu'à assimilation complète. »
+          </p>
+
+          <h4 class="font-display text-lg text-gold uppercase pt-2">4. Accès et délivrance</h4>
+          <p>
+            Dès validation du règlement sur Stripe, l'élève reçoit immédiatement un courriel de confirmation contenant toutes les instructions d'accès à la session Zoom, aux replays et au téléchargement du livre PDF de 238 pages.
+          </p>
+        </div>
+      </div>
+
+      <!-- Footer of Modal -->
+      <div class="p-4 bg-bgDark border-t border-white/[0.08] flex justify-end">
+        <button onclick="closeLegalModal()" class="px-5 py-2 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white font-mono text-xs uppercase font-bold transition-colors">
+          Fermer
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1669,6 +1791,65 @@
     // Fermer la lightbox si on clique en dehors
     document.getElementById("lightbox-modal")?.addEventListener("click", (e) => {
       if (e.target.id === "lightbox-modal") {
+        closeLightbox();
+      }
+    });
+
+    /**
+     * Modale d'informations légales (Mentions, Confidentialité, CGV)
+     */
+    function openLegalModal(tab) {
+      const modal = document.getElementById("legal-modal");
+      if (!modal) return;
+      showLegalTab(tab || 'mentions');
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeLegalModal() {
+      const modal = document.getElementById("legal-modal");
+      if (!modal) return;
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
+
+    function showLegalTab(tabName) {
+      const tabs = ['mentions', 'confidentialite', 'cgv'];
+      const titles = {
+        mentions: 'Mentions Légales',
+        confidentialite: 'Politique de Confidentialité',
+        cgv: 'Conditions Générales de Vente (CGV)'
+      };
+      
+      const titleEl = document.getElementById('legal-modal-title');
+      if (titleEl && titles[tabName]) titleEl.textContent = titles[tabName];
+
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-btn-${t}`);
+        const content = document.getElementById(`legal-content-${t}`);
+        if (t === tabName) {
+          if (btn) {
+            btn.classList.add('border-gold', 'text-gold');
+            btn.classList.remove('border-transparent', 'text-textMuted');
+          }
+          if (content) content.classList.remove('hidden');
+        } else {
+          if (btn) {
+            btn.classList.remove('border-gold', 'text-gold');
+            btn.classList.add('border-transparent', 'text-textMuted');
+          }
+          if (content) content.classList.add('hidden');
+        }
+      });
+    }
+
+    // Support de la touche Échap pour fermer les modales
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeLegalModal();
         closeLightbox();
       }
     });
