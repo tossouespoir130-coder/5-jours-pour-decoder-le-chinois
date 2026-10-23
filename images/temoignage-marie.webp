@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="280" viewBox="0 0 600 280">
+    <rect width="100%" height="100%" fill="#14141A" rx="20" stroke="#F5C542" stroke-width="1"/>
+    <circle cx="50" cy="55" r="22" fill="#F5C542"/>
+    <text x="50" y="62" fill="#0B0B0D" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle">M</text>
+    <text x="85" y="48" fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold">Marie Hester L.</text>
+    <text x="85" y="68" fill="#F5C542" font-family="sans-serif" font-size="12">★ ★ ★ ★ ★ • Avis d'élève vérifié (Cohorte 5 Jours)</text>
+    <foreignObject x="40" y="100" width="520" height="120">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="color: #F2F2F2; font-family: sans-serif; font-size: 15px; line-height: 1.6;">
+        « J'ai vraiment apprécié la formation et je la recommande les yeux fermés. La clarté des explications d'Espoir sur les tons a complètement débloqué ma prononciation ! »
+      </div>
+    </foreignObject>
+    <text x="40" y="245" fill="#A1A1AA" font-family="monospace" font-size="11">ID VÉRIFICATION : #MM-ZH-2026-089 • CERTIFIÉ ACADÉMIE ESPOIR CHINOIS</text>
+  </svg>
