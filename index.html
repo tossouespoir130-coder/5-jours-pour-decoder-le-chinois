@@ -126,6 +126,30 @@
     .timeline-delay-3 { animation-delay: 0.9s; }
     .timeline-delay-4 { animation-delay: 1.35s; }
     .timeline-delay-5 { animation-delay: 1.8s; }
+
+    /* Animated Video Play Button (Breathe, pulse & float) */
+    @keyframes play-pulse-float {
+      0%, 100% {
+        transform: scale(1) translateY(0);
+        box-shadow: 0 0 0 0 rgba(245, 197, 66, 0.6), 0 0 30px rgba(215, 38, 56, 0.4);
+      }
+      50% {
+        transform: scale(1.08) translateY(-3px);
+        box-shadow: 0 0 0 16px rgba(245, 197, 66, 0), 0 0 50px rgba(245, 197, 66, 0.9);
+      }
+    }
+    .video-play-pulse {
+      animation: play-pulse-float 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    /* Timeline dynamic step highlight */
+    .timeline-step-dot.step-active {
+      background-color: #F5C542 !important;
+      color: #0A090D !important;
+      border-color: #F5C542 !important;
+      box-shadow: 0 0 22px rgba(245, 197, 66, 0.9) !important;
+      transform: scale(1.15);
+    }
   </style>
 </head>
 
@@ -177,16 +201,51 @@
     </div>
 
     <div class="max-w-4xl mx-auto text-center relative z-10">
-      <!-- Lecteur Vidéo Principal (Lecture automatique directe sans overlay ni commentaire) -->
-      <div id="video-container" class="relative w-full aspect-video rounded-2xl sm:rounded-3xl overflow-hidden bg-bgCard border border-white/[0.1] shadow-2xl mb-12 sm:mb-16">
+      <!-- Lecteur Vidéo Principal (Pas d'autoplay intempestif + Bouton Play interactif animé) -->
+      <div id="video-container" class="relative w-full aspect-video rounded-2xl sm:rounded-3xl overflow-hidden bg-bgCard border border-white/[0.1] shadow-2xl mb-12 sm:mb-16 group">
+        <!-- Iframe YouTube sans autoplay initial -->
         <iframe 
           id="main-youtube-iframe"
-          src="https://www.youtube.com/embed/SSmWfMIPcME?autoplay=1&rel=0&modestbranding=1&playsinline=1" 
+          data-src="https://www.youtube.com/embed/SSmWfMIPcME?autoplay=1&rel=0&modestbranding=1&playsinline=1" 
+          src="" 
           title="Vidéo de présentation - Espoir Chinois"
-          class="w-full h-full absolute inset-0 border-0"
+          class="w-full h-full absolute inset-0 border-0 z-0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
           allowfullscreen>
         </iframe>
+
+        <!-- Facade / Couverture avec Bouton Play Animé et Flottant -->
+        <div id="video-facade" class="absolute inset-0 z-10 bg-bgDark flex flex-col items-center justify-center cursor-pointer transition-opacity duration-300" onclick="playPresentationVideo()">
+          <!-- Fond miniature avec gradient sombre -->
+          <img 
+            src="images/espoir-hero.webp" 
+            alt="Présentation Espoir Chinois" 
+            class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-75 transition-opacity duration-300"
+          >
+          <div class="absolute inset-0 bg-gradient-to-t from-bgDark via-bgDark/40 to-black/30"></div>
+
+          <!-- Bouton Play Animé (Agrandie sur mobile et flottant/animé) -->
+          <div class="relative z-20 flex flex-col items-center gap-3 sm:gap-4 p-4 text-center">
+            <div class="relative flex items-center justify-center">
+              <!-- Ripple ring -->
+              <span class="absolute w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gold/25 animate-ping pointer-events-none"></span>
+              <!-- Main Play Button -->
+              <button 
+                type="button"
+                aria-label="Lancer la vidéo" 
+                class="video-play-pulse w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-[#D72638] via-gold to-[#FFE27A] text-bgDark flex items-center justify-center shadow-gold-glow active:scale-95 transition-transform"
+              >
+                <i data-lucide="play" class="w-7 h-7 sm:w-9 sm:h-9 fill-bgDark text-bgDark ml-1 flex-shrink-0"></i>
+              </button>
+            </div>
+
+            <!-- Badge interactif -->
+            <div class="px-4 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white font-mono text-xs sm:text-sm font-semibold tracking-wide flex items-center gap-2 group-hover:border-gold/50 transition-colors shadow-lg">
+              <span class="w-2 h-2 rounded-full bg-chineseRed animate-pulse"></span>
+              <span>Regarder la présentation (2 min)</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Opportunité & Vision placé en-dessous de la vidéo -->
@@ -484,12 +543,18 @@
       </p>
     </div>
 
-    <!-- Vertical Timeline -->
-    <div class="relative border-l-2 border-gold/20 ml-4 sm:ml-8 md:ml-12 pl-6 sm:pl-10 space-y-12">
+    <!-- Vertical Timeline Dynamique avec jauge dorée animée au scroll -->
+    <div id="programme-timeline" class="relative ml-2 sm:ml-8 md:ml-12 pl-12 sm:pl-16 space-y-12">
+      <!-- Piste d'arrière-plan statique -->
+      <div class="absolute left-[14px] sm:left-[18px] top-5 bottom-8 w-[4px] bg-white/[0.08] rounded-full pointer-events-none z-0"></div>
+
+      <!-- Ligne active qui jaunit et charge vers le bas au fil du défilement -->
+      <div id="timeline-fill" class="absolute left-[14px] sm:left-[18px] top-5 w-[4px] bg-gradient-to-b from-gold via-[#FFE27A] to-gold shadow-[0_0_18px_rgba(245,197,66,0.95)] rounded-full pointer-events-none transition-all duration-75 ease-out z-0" style="height: 0%;"></div>
+
       <!-- Day 1 -->
       <div class="relative group">
         <!-- Dot on timeline with animated glowing pulse -->
-        <div class="absolute -left-[32px] sm:-left-[48px] top-1 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-1 group-hover:scale-125 transition-transform z-10 shadow-gold-glow">
+        <div class="timeline-step-dot absolute -left-[48px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-1 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
           1
         </div>
         <div class="p-6 sm:p-8 rounded-3xl bg-bgCard border border-white/[0.06] group-hover:border-gold/30 transition-colors shadow-lg">
@@ -508,7 +573,7 @@
 
       <!-- Day 2 -->
       <div class="relative group">
-        <div class="absolute -left-[32px] sm:-left-[48px] top-1 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-2 group-hover:scale-125 transition-transform z-10 shadow-gold-glow">
+        <div class="timeline-step-dot absolute -left-[48px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-2 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
           2
         </div>
         <div class="p-6 sm:p-8 rounded-3xl bg-bgCard border border-white/[0.06] group-hover:border-gold/30 transition-colors shadow-lg">
@@ -527,7 +592,7 @@
 
       <!-- Day 3 -->
       <div class="relative group">
-        <div class="absolute -left-[32px] sm:-left-[48px] top-1 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-3 group-hover:scale-125 transition-transform z-10 shadow-gold-glow">
+        <div class="timeline-step-dot absolute -left-[48px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-3 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
           3
         </div>
         <div class="p-6 sm:p-8 rounded-3xl bg-bgCard border border-white/[0.06] group-hover:border-gold/30 transition-colors shadow-lg">
@@ -546,7 +611,7 @@
 
       <!-- Day 4 -->
       <div class="relative group">
-        <div class="absolute -left-[32px] sm:-left-[48px] top-1 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-4 group-hover:scale-125 transition-transform z-10 shadow-gold-glow">
+        <div class="timeline-step-dot absolute -left-[48px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-bgDark border-2 border-gold text-gold flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-4 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
           4
         </div>
         <div class="p-6 sm:p-8 rounded-3xl bg-bgCard border border-white/[0.06] group-hover:border-gold/30 transition-colors shadow-lg">
@@ -565,7 +630,7 @@
 
       <!-- Day 5 -->
       <div class="relative group">
-        <div class="absolute -left-[32px] sm:-left-[48px] top-1 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gold text-bgDark flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-5 group-hover:scale-125 transition-transform z-10 shadow-gold-glow">
+        <div class="timeline-step-dot absolute -left-[48px] sm:-left-[64px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gold text-bgDark flex items-center justify-center font-bold font-mono text-xs sm:text-sm timeline-pulse timeline-delay-5 group-hover:scale-125 transition-all duration-300 z-10 shadow-gold-glow">
           5
         </div>
         <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-bgCard to-[#1F1A12] border-2 border-gold/40 transition-colors shadow-xl">
@@ -1014,141 +1079,223 @@
         </p>
       </div>
 
-      <!-- Grid of 7 Bonuses -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Grid of 7 Harmonious Bonuses (Toutes dans la même proportion avec visuels 3D dédiés) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         
-        <!-- Bonus 1 (Book mockup featured) -->
-        <div class="p-6 sm:p-8 rounded-3xl bg-bgCard border border-gold/40 flex flex-col md:flex-row justify-between gap-6 shadow-gold-glow lg:col-span-2 relative overflow-hidden">
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="text-xs font-mono font-bold text-bgDark bg-gold px-2.5 py-1 rounded-md">BONUS #1</span>
-                <span class="text-xs font-mono text-gold line-through whitespace-nowrap">Valeur : 39&nbsp;€</span>
-              </div>
-              <h3 class="font-display text-2xl sm:text-3xl text-white uppercase mb-2">
-                Le livre complet « 30 phrases pour commencer à parler chinois » (238 pages)
-              </h3>
-              <p class="text-sm text-textMuted leading-relaxed mb-6">
-                Le manuel ultra-pratique de la formation : explications simples, méthodes, exercices, culture chinoise, mini-corrections, rappels essentiels. Tu progresses 3 fois plus vite en révisant avec le livre.
-              </p>
+        <!-- Bonus 1 : Livre 3D -->
+        <div class="p-6 sm:p-7 rounded-3xl bg-bgCard border border-white/[0.08] hover:border-gold/50 transition-all duration-300 flex flex-col justify-between group shadow-xl">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-bold text-bgDark bg-gold px-3 py-1 rounded-md shadow-sm">BONUS #1</span>
+              <span class="text-xs font-mono text-gold line-through whitespace-nowrap">Valeur : 39&nbsp;€</span>
             </div>
             
-            <div class="p-3.5 rounded-2xl bg-bgDark/80 border border-white/[0.06] flex items-center gap-3">
-              <i data-lucide="file-text" class="w-5 h-5 text-gold flex-shrink-0"></i>
-              <div class="text-xs">
-                <div class="font-bold text-white">E-book officiel haute définition (PDF 238p)</div>
-                <div class="text-textMuted">Téléchargement immédiat inclus avec ton inscription</div>
-              </div>
+            <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-bgDark/90 border border-white/[0.06] mb-5 p-3 flex items-center justify-center group-hover:border-gold/30 transition-colors">
+              <img 
+                src="images/livre-3d.jpg" 
+                alt="Livre 30 phrases pour commencer à parler chinois - Espoir Chinois" 
+                class="w-full h-full object-contain filter drop-shadow-xl group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              >
             </div>
+
+            <h3 class="font-display text-xl sm:text-2xl text-white uppercase mb-2 leading-snug">
+              Le livre complet « 30 phrases pour commencer à parler chinois »
+            </h3>
+            <p class="text-xs sm:text-sm text-textMuted leading-relaxed mb-4">
+              Le manuel ultra-pratique de la formation : explications simples, méthodes, exercices, culture chinoise, mini-corrections et rappels essentiels (238 pages).
+            </p>
           </div>
 
-          <!-- Realistic 3D Mockup Image -->
-          <div class="w-full md:w-64 aspect-[3/4] md:aspect-square rounded-2xl overflow-hidden bg-bgDark/90 border border-gold/30 shadow-2xl flex items-center justify-center p-2 flex-shrink-0 group">
-            <img 
-              src="images/livre-3d.jpg" 
-              alt="Livre 30 phrases pour commencer à parler chinois - Espoir Chinois" 
-              class="w-full h-full object-contain filter drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
-            >
+          <div class="pt-3.5 border-t border-white/[0.06] flex items-center gap-2 text-xs font-mono text-gold">
+            <i data-lucide="file-text" class="w-4 h-4 flex-shrink-0"></i>
+            <span>E-book officiel HD (PDF 238p)</span>
           </div>
         </div>
 
-        <!-- Bonus 2 -->
-        <div class="p-6 sm:p-8 rounded-3xl bg-bgCard border border-white/[0.06] flex flex-col justify-between hover:border-gold/40 transition-colors">
+        <!-- Bonus 2 : Formation Vidéo -->
+        <div class="p-6 sm:p-7 rounded-3xl bg-bgCard border border-white/[0.08] hover:border-gold/50 transition-all duration-300 flex flex-col justify-between group shadow-xl">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-mono font-bold text-gold bg-gold/10 border border-gold/30 px-2.5 py-1 rounded-md">BONUS #2</span>
+              <span class="text-xs font-mono font-bold text-bgDark bg-gold px-3 py-1 rounded-md shadow-sm">BONUS #2</span>
               <span class="text-xs font-mono text-gold line-through whitespace-nowrap">Valeur : 149&nbsp;€</span>
             </div>
-            <h3 class="font-display text-2xl text-white uppercase mb-2">
+            
+            <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-bgDark/90 border border-white/[0.06] mb-5 p-2 flex items-center justify-center group-hover:border-gold/30 transition-colors">
+              <img 
+                src="images/bonus-video.jpg" 
+                alt="Formation Vidéo +30 Modules - Espoir Chinois" 
+                class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              >
+            </div>
+
+            <h3 class="font-display text-xl sm:text-2xl text-white uppercase mb-2 leading-snug">
               La formation vidéo complète : +30 vidéos
             </h3>
-            <p class="text-sm text-textMuted leading-relaxed">
-              Décryptage phrase par phrase, prononciation guidée, usages réels, conseils d'amélioration, outils concrets. Une formation complète à elle seule, offerte.
+            <p class="text-xs sm:text-sm text-textMuted leading-relaxed mb-4">
+              Décryptage phrase par phrase, prononciation guidée, usages réels, conseils d'amélioration et outils concrets. Une formation vidéo complète à elle seule.
             </p>
           </div>
-          <div class="mt-6 pt-4 border-t border-white/[0.04] text-xs font-mono text-gold">
-            Accès à vie aux modules vidéo
+
+          <div class="pt-3.5 border-t border-white/[0.06] flex items-center gap-2 text-xs font-mono text-gold">
+            <i data-lucide="play-circle" class="w-4 h-4 flex-shrink-0"></i>
+            <span>Accès à vie aux modules vidéo</span>
           </div>
         </div>
 
-        <!-- Bonus 3 -->
-        <div class="p-6 sm:p-8 rounded-3xl bg-bgCard border border-white/[0.06] flex flex-col justify-between hover:border-gold/40 transition-colors">
+        <!-- Bonus 3 : Supports Audio CD -->
+        <div class="p-6 sm:p-7 rounded-3xl bg-bgCard border border-white/[0.08] hover:border-gold/50 transition-all duration-300 flex flex-col justify-between group shadow-xl">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-mono font-bold text-gold bg-gold/10 border border-gold/30 px-2.5 py-1 rounded-md">BONUS #3</span>
+              <span class="text-xs font-mono font-bold text-bgDark bg-gold px-3 py-1 rounded-md shadow-sm">BONUS #3</span>
               <span class="text-xs font-mono text-gold line-through whitespace-nowrap">Valeur : 25&nbsp;€</span>
             </div>
-            <h3 class="font-display text-2xl text-white uppercase mb-2">
-              Tous les supports audio du livre
+            
+            <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-bgDark/90 border border-white/[0.06] mb-5 p-2 flex items-center justify-center group-hover:border-gold/30 transition-colors">
+              <img 
+                src="images/bonus-cd.jpg" 
+                alt="Supports Audio MP3 Guide Phonétique - Espoir Chinois" 
+                class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              >
+            </div>
+
+            <h3 class="font-display text-xl sm:text-2xl text-white uppercase mb-2 leading-snug">
+              Tous les supports audio du livre (CD & MP3)
             </h3>
-            <p class="text-sm text-textMuted leading-relaxed">
-              Prononciation native et non native, mots, phrases, tons, répétitions guidées. La pratique audio : ton accélérateur le plus puissant pour ton oreille.
+            <p class="text-xs sm:text-sm text-textMuted leading-relaxed mb-4">
+              Prononciation native et non native, mots, phrases, tons et répétitions guidées. L'accélérateur le plus puissant pour former et aiguiser ton oreille.
             </p>
           </div>
-          <div class="mt-6 pt-4 border-t border-white/[0.04] text-xs font-mono text-gold">
-            Format MP3 haute qualité
+
+          <div class="pt-3.5 border-t border-white/[0.06] flex items-center gap-2 text-xs font-mono text-gold">
+            <i data-lucide="disc" class="w-4 h-4 flex-shrink-0"></i>
+            <span>Supports audio MP3 haute fidélité</span>
           </div>
         </div>
 
-        <!-- Bonus 4 -->
-        <div class="p-6 sm:p-8 rounded-3xl bg-bgCard border border-white/[0.06] flex flex-col justify-between hover:border-gold/40 transition-colors">
+        <!-- Bonus 4 : WhatsApp VIP -->
+        <div class="p-6 sm:p-7 rounded-3xl bg-bgCard border border-white/[0.08] hover:border-gold/50 transition-all duration-300 flex flex-col justify-between group shadow-xl">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-mono font-bold text-gold bg-gold/10 border border-gold/30 px-2.5 py-1 rounded-md">BONUS #4</span>
+              <span class="text-xs font-mono font-bold text-bgDark bg-gold px-3 py-1 rounded-md shadow-sm">BONUS #4</span>
               <span class="text-xs font-mono text-gold font-bold whitespace-nowrap">Valeur : Inestimable</span>
             </div>
-            <h3 class="font-display text-2xl text-white uppercase mb-2">
+            
+            <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-bgDark/90 border border-white/[0.06] mb-5 p-2 flex items-center justify-center group-hover:border-gold/30 transition-colors">
+              <img 
+                src="images/bonus-whatsapp.jpg" 
+                alt="Accès Groupe WhatsApp VIP - Espoir Chinois" 
+                class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              >
+            </div>
+
+            <h3 class="font-display text-xl sm:text-2xl text-white uppercase mb-2 leading-snug">
               Accès au groupe WhatsApp VIP
             </h3>
-            <p class="text-sm text-textMuted leading-relaxed">
-              Corrections, rappels, audios, motivation, soutien entre participants, réponses directes d'Espoir. Un environnement idéal pour ne pas abandonner.
+            <p class="text-xs sm:text-sm text-textMuted leading-relaxed mb-4">
+              Corrections, rappels, audios, motivation, entraide entre participants et réponses directes d'Espoir. L'environnement idéal pour rester constant.
             </p>
           </div>
-          <div class="mt-6 pt-4 border-t border-white/[0.04] text-xs font-mono text-gold">
-            Communauté fermée d'entraide
+
+          <div class="pt-3.5 border-t border-white/[0.06] flex items-center gap-2 text-xs font-mono text-gold">
+            <i data-lucide="message-circle" class="w-4 h-4 flex-shrink-0"></i>
+            <span>Communauté privée WhatsApp</span>
           </div>
         </div>
 
-        <!-- Bonus 5 -->
-        <div class="p-6 sm:p-8 rounded-3xl bg-bgCard border border-white/[0.06] flex flex-col justify-between hover:border-gold/40 transition-colors">
+        <!-- Bonus 5 : Pack Dialogues & Exercices -->
+        <div class="p-6 sm:p-7 rounded-3xl bg-bgCard border border-white/[0.08] hover:border-gold/50 transition-all duration-300 flex flex-col justify-between group shadow-xl">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-mono font-bold text-gold bg-gold/10 border border-gold/30 px-2.5 py-1 rounded-md">BONUS #5</span>
+              <span class="text-xs font-mono font-bold text-bgDark bg-gold px-3 py-1 rounded-md shadow-sm">BONUS #5</span>
               <span class="text-xs font-mono text-gold line-through whitespace-nowrap">Valeur : 49&nbsp;€</span>
             </div>
-            <h3 class="font-display text-2xl text-white uppercase mb-2">
-              Pack dialogues & supports d'exercices
+            
+            <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-bgDark/90 border border-white/[0.06] mb-5 p-2 flex items-center justify-center group-hover:border-gold/30 transition-colors">
+              <img 
+                src="images/bonus-exercices.jpg" 
+                alt="Pack Dialogues et Exercices Pratiques - Espoir Chinois" 
+                class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              >
+            </div>
+
+            <h3 class="font-display text-xl sm:text-2xl text-white uppercase mb-2 leading-snug">
+              Pack dialogues & fiches d'exercices
             </h3>
-            <p class="text-sm text-textMuted leading-relaxed">
-              Après chaque séance : dialogues prêts à utiliser, mises en situation réalistes, exercices guidés pour t'entraîner seul, mini-conversations à répéter.
+            <p class="text-xs sm:text-sm text-textMuted leading-relaxed mb-4">
+              Après chaque séance : dialogues prêts à l'emploi, mises en situation réalistes, exercices guidés pour t'entraîner en autonomie et fiches récapitulatives.
             </p>
           </div>
-          <div class="mt-6 pt-4 border-t border-white/[0.04] text-xs font-mono text-gold">
-            Fiches PDF synthétiques
+
+          <div class="pt-3.5 border-t border-white/[0.06] flex items-center gap-2 text-xs font-mono text-gold">
+            <i data-lucide="layers" class="w-4 h-4 flex-shrink-0"></i>
+            <span>Fiches & livrets d'exercices PDF</span>
           </div>
         </div>
 
-        <!-- Bonus 6 & 7 grouped in 1 card -->
-        <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-bgCard to-[#1E1924] border border-white/[0.08] flex flex-col justify-between">
-          <div class="space-y-6">
-            <div>
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-mono font-bold text-gold bg-gold/10 border border-gold/30 px-2.5 py-1 rounded-md">BONUS #6</span>
-                <span class="text-xs font-mono text-gold line-through whitespace-nowrap">Valeur : 15&nbsp;€</span>
-              </div>
-              <h4 class="font-display text-xl text-white uppercase">Attestation de participation</h4>
-              <p class="text-xs text-textMuted">Certificat PDF nominatif attestant de tes 5 jours de formation intensive.</p>
+        <!-- Bonus 6 : Attestation Officielle -->
+        <div class="p-6 sm:p-7 rounded-3xl bg-bgCard border border-white/[0.08] hover:border-gold/50 transition-all duration-300 flex flex-col justify-between group shadow-xl">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-bold text-bgDark bg-gold px-3 py-1 rounded-md shadow-sm">BONUS #6</span>
+              <span class="text-xs font-mono text-gold line-through whitespace-nowrap">Valeur : 15&nbsp;€</span>
+            </div>
+            
+            <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-bgDark/90 border border-white/[0.06] mb-5 p-2 flex items-center justify-center group-hover:border-gold/30 transition-colors">
+              <img 
+                src="images/bonus-certificat.jpg" 
+                alt="Attestation Officielle de Réussite - Espoir Chinois" 
+                class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              >
             </div>
 
-            <div class="pt-4 border-t border-white/[0.06]">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-mono font-bold text-gold bg-gold/15 px-2.5 py-1 rounded-md">BONUS #7</span>
-                <span class="text-xs font-mono text-gold font-bold">Inestimable</span>
-              </div>
-              <h4 class="font-display text-xl text-white uppercase">Accès prioritaire & Tarif spécial</h4>
-              <p class="text-xs text-textMuted">Offre exclusive réservée aux participants pour continuer sur le programme supérieur.</p>
+            <h3 class="font-display text-xl sm:text-2xl text-white uppercase mb-2 leading-snug">
+              Attestation officielle de participation
+            </h3>
+            <p class="text-xs sm:text-sm text-textMuted leading-relaxed mb-4">
+              Certificat officiel nominatif délivré à l'issue des 5 jours attestant de ton assiduité, de ta maîtrise des bases et de ta réussite au programme.
+            </p>
+          </div>
+
+          <div class="pt-3.5 border-t border-white/[0.06] flex items-center gap-2 text-xs font-mono text-gold">
+            <i data-lucide="award" class="w-4 h-4 flex-shrink-0"></i>
+            <span>Certificat nominatif officiel</span>
+          </div>
+        </div>
+
+        <!-- Bonus 7 : Pass Membre VIP Privilège -->
+        <div class="p-6 sm:p-7 rounded-3xl bg-gradient-to-br from-bgCard via-[#1B1612] to-bgCard border-2 border-gold/40 hover:border-gold transition-all duration-300 flex flex-col justify-between group shadow-gold-glow md:col-span-2 lg:col-span-1 lg:col-start-2">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-bold text-bgDark bg-gold px-3 py-1 rounded-md shadow-sm">BONUS #7</span>
+              <span class="text-xs font-mono text-gold font-bold whitespace-nowrap">Valeur : Inestimable</span>
             </div>
+            
+            <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-bgDark/90 border border-gold/30 mb-5 p-2 flex items-center justify-center group-hover:border-gold/50 transition-colors">
+              <img 
+                src="images/bonus-vippass.jpg" 
+                alt="Pass VIP Privilège et Tarif Spécial - Espoir Chinois" 
+                class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              >
+            </div>
+
+            <h3 class="font-display text-xl sm:text-2xl text-white uppercase mb-2 leading-snug">
+              Accès prioritaire & Tarif VIP spécial
+            </h3>
+            <p class="text-xs sm:text-sm text-textMuted leading-relaxed mb-4">
+              Statut privilégié à vie et conditions tarifaires exclusives réservées uniquement aux participants de la cohorte pour accéder au programme avancé.
+            </p>
+          </div>
+
+          <div class="pt-3.5 border-t border-white/[0.06] flex items-center gap-2 text-xs font-mono text-gold">
+            <i data-lucide="star" class="w-4 h-4 flex-shrink-0"></i>
+            <span>Pass Privilège réservé aux membres</span>
           </div>
         </div>
       </div>
@@ -1673,17 +1820,31 @@
 
       // 6. Gestionnaire de la barre CTA Mobile Sticky au scroll
       initStickyMobileCTA();
+
+      // 7. Timeline Progression Dynamique au Défilement (Bande dorée qui charge au scroll)
+      initTimelineScrollAnimation();
     });
 
     /**
-     * Façade Vidéo YouTube (Ne charge l'iframe qu'au clic de l'utilisateur)
+     * Façade Vidéo YouTube & Démarrage Interactif (Pas d'autoplay intempestif)
      */
-    function initYouTubeFacade() {
-      // 1. Lecteur Vidéo Présentation (lecture automatique directe)
+    function playPresentationVideo() {
       const mainIframe = document.getElementById("main-youtube-iframe");
+      const facade = document.getElementById("video-facade");
       if (mainIframe && CONFIG.YOUTUBE_ID) {
         mainIframe.setAttribute("src", `https://www.youtube.com/embed/${CONFIG.YOUTUBE_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1`);
       }
+      if (facade) {
+        facade.classList.add("opacity-0", "pointer-events-none");
+        setTimeout(() => {
+          facade.style.display = "none";
+        }, 350);
+      }
+    }
+
+    function initYouTubeFacade() {
+      // Le lecteur principal reste en pause au chargement sur ordi comme sur mobile.
+      // Il est démarré au clic via playPresentationVideo().
 
       // 2. Façade Vidéo Témoignages & Retours
       const retoursFacade = document.getElementById("youtube-retours-facade");
@@ -1701,6 +1862,47 @@
           retoursFacade.appendChild(iframe);
         });
       }
+    }
+
+    /**
+     * Timeline Progression Dynamique au Défilement
+     * Remplit la bande verticale d'or et allume les étapes au fil du défilement
+     */
+    function initTimelineScrollAnimation() {
+      const timeline = document.getElementById("programme-timeline");
+      const fillBar = document.getElementById("timeline-fill");
+      if (!timeline || !fillBar) return;
+
+      const steps = timeline.querySelectorAll(".timeline-step-dot");
+
+      function updateProgress() {
+        const rect = timeline.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // Début du remplissage quand le programme entre dans le champ visuel
+        const triggerPoint = windowHeight * 0.70;
+        const totalHeight = rect.height;
+        const scrolled = triggerPoint - rect.top;
+
+        let progress = (scrolled / totalHeight) * 100;
+        progress = Math.max(0, Math.min(100, progress));
+
+        fillBar.style.height = `${progress}%`;
+
+        // Illumination dorée synchronisée des points d'étape
+        steps.forEach(dot => {
+          const dotRect = dot.getBoundingClientRect();
+          if (dotRect.top <= triggerPoint) {
+            dot.classList.add("step-active");
+          } else {
+            dot.classList.remove("step-active");
+          }
+        });
+      }
+
+      window.addEventListener("scroll", updateProgress, { passive: true });
+      window.addEventListener("resize", updateProgress, { passive: true });
+      updateProgress();
     }
 
     /**
