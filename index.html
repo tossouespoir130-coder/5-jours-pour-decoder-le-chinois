@@ -201,52 +201,16 @@
     </div>
 
     <div class="max-w-4xl mx-auto text-center relative z-10">
-      <!-- Lecteur Vidéo Principal (Pas d'autoplay intempestif + Bouton Play interactif animé) -->
-      <div id="video-container" class="relative w-full aspect-video rounded-2xl sm:rounded-3xl overflow-hidden bg-bgCard border border-white/[0.1] shadow-2xl mb-12 sm:mb-16 group">
-        <!-- Iframe YouTube sans autoplay initial -->
+      <!-- Lecteur Vidéo Principal Officiel YouTube (1 Clic instantané, Pas d'autoplay intempestif) -->
+      <div id="video-container" class="relative w-full aspect-video rounded-2xl sm:rounded-3xl overflow-hidden bg-bgCard border border-white/[0.1] shadow-2xl mb-12 sm:mb-16">
         <iframe 
           id="main-youtube-iframe"
-          data-src="https://www.youtube.com/embed/SSmWfMIPcME?autoplay=1&rel=0&modestbranding=1&playsinline=1" 
-          src="" 
+          src="https://www.youtube.com/embed/SSmWfMIPcME?autoplay=0&rel=0&modestbranding=1&playsinline=1" 
           title="Vidéo de présentation - Espoir Chinois"
-          class="w-full h-full absolute inset-0 border-0 z-0"
+          class="w-full h-full absolute inset-0 border-0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
           allowfullscreen>
         </iframe>
-
-        <!-- Facade / Couverture avec Bouton Play Animé (Miniature officielle exacte de la présentation préservée) -->
-        <div id="video-facade" class="absolute inset-0 z-10 bg-bgDark flex flex-col items-center justify-center cursor-pointer transition-opacity duration-300" onclick="playPresentationVideo()">
-          <!-- Miniature officielle originale de la présentation YouTube -->
-          <img 
-            src="images/miniature-video-presentation.jpg" 
-            alt="Miniature officielle - 5 Jours Pour Décoder Le Chinois" 
-            class="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
-          >
-          <!-- Voile très subtil pour faire flotter le bouton play sans masquer le texte ni le visage de la miniature -->
-          <div class="absolute inset-0 bg-black/15 group-hover:bg-black/5 transition-colors duration-300"></div>
-
-          <!-- Bouton Play Animé & Flottant (Optimisé desktop & mobile) -->
-          <div class="relative z-20 flex flex-col items-center gap-2.5 sm:gap-4 p-2 sm:p-4 text-center">
-            <div class="relative flex items-center justify-center">
-              <!-- Ripple ring -->
-              <span class="absolute w-16 h-16 sm:w-24 sm:h-24 rounded-full bg-gold/30 animate-ping pointer-events-none"></span>
-              <!-- Main Play Button -->
-              <button 
-                type="button"
-                aria-label="Lancer la vidéo" 
-                class="video-play-pulse w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-[#D72638] via-gold to-[#FFE27A] text-bgDark flex items-center justify-center shadow-gold-glow active:scale-95 transition-transform"
-              >
-                <i data-lucide="play" class="w-6 h-6 sm:w-9 sm:h-9 fill-bgDark text-bgDark ml-1 flex-shrink-0"></i>
-              </button>
-            </div>
-
-            <!-- Badge interactif compact et lisible -->
-            <div class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white font-mono text-[11px] sm:text-sm font-semibold tracking-wide flex items-center gap-1.5 sm:gap-2 group-hover:border-gold/50 transition-colors shadow-xl">
-              <span class="w-2 h-2 rounded-full bg-chineseRed animate-pulse"></span>
-              <span>Regarder la présentation (2 min)</span>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- Opportunité & Vision placé en-dessous de la vidéo -->
@@ -1827,25 +1791,14 @@
     });
 
     /**
-     * Façade Vidéo YouTube & Démarrage Interactif (Pas d'autoplay intempestif)
+     * Configuration des vidéos YouTube
      */
-    function playPresentationVideo() {
-      const mainIframe = document.getElementById("main-youtube-iframe");
-      const facade = document.getElementById("video-facade");
-      if (mainIframe && CONFIG.YOUTUBE_ID) {
-        mainIframe.setAttribute("src", `https://www.youtube.com/embed/${CONFIG.YOUTUBE_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1`);
-      }
-      if (facade) {
-        facade.classList.add("opacity-0", "pointer-events-none");
-        setTimeout(() => {
-          facade.style.display = "none";
-        }, 350);
-      }
-    }
-
     function initYouTubeFacade() {
-      // Le lecteur principal reste en pause au chargement sur ordi comme sur mobile.
-      // Il est démarré au clic via playPresentationVideo().
+      // 1. Vidéo de présentation principale : lecteur officiel natif 1-clic direct (pas d'autoplay au chargement)
+      const mainIframe = document.getElementById("main-youtube-iframe");
+      if (mainIframe && CONFIG.YOUTUBE_ID) {
+        mainIframe.setAttribute("src", `https://www.youtube.com/embed/${CONFIG.YOUTUBE_ID}?autoplay=0&rel=0&modestbranding=1&playsinline=1`);
+      }
 
       // 2. Façade Vidéo Témoignages & Retours
       const retoursFacade = document.getElementById("youtube-retours-facade");
