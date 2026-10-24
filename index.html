@@ -1715,6 +1715,25 @@
     };
 
     /**
+     * Forcer le rechargement de la page à toujours démarrer tout en haut (Hero)
+     * et empêcher l'URL de conserver le hash #prix
+     */
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    if (window.location.hash === '#prix') {
+      history.replaceState(null, null, window.location.pathname + window.location.search);
+      window.scrollTo(0, 0);
+    }
+
+    window.addEventListener('load', () => {
+      if (!window.location.hash) {
+        window.scrollTo(0, 0);
+      }
+    });
+
+    /**
      * Initialisation du DOM et injection dynamique des données CONFIG
      */
     document.addEventListener("DOMContentLoaded", () => {
@@ -1724,8 +1743,16 @@
       document.querySelectorAll(".config-places-max").forEach(el => el.textContent = CONFIG.PLACES_MAX);
 
       // 2. Gestion adaptative des boutons "JE M'INSCRIS" :
-      // - Les boutons Hero, Sticky Mobile, et Closing défilent tous vers la section #prix
+      // - Défilement fluide vers #prix sans polluer l'URL du navigateur (évite de réouvrir sur le prix au rechargement)
       // - Seul le bouton central DANS la section #prix ouvre la page de paiement Stripe Checkout
+      function scrollToPrix(e) {
+        if (e) e.preventDefault();
+        const prixSection = document.getElementById("prix");
+        if (prixSection) {
+          prixSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+
       function applyDeviceCtaRoutes() {
         // Bouton centralisé dans la section #prix : mène toujours directement vers Stripe
         const prixCta = document.querySelector("#prix .stripe-cta-link");
@@ -1733,39 +1760,20 @@
           prixCta.setAttribute("href", CONFIG.STRIPE_LINK);
           prixCta.setAttribute("target", "_blank");
           prixCta.setAttribute("rel", "noopener noreferrer");
+          prixCta.onclick = null;
         }
 
-        // Bouton Hero CTA : défilement fluide vers #prix
-        const heroCta = document.getElementById("hero-cta");
-        if (heroCta) {
-          heroCta.setAttribute("href", "#prix");
-          heroCta.removeAttribute("target");
-          heroCta.removeAttribute("rel");
-        }
-
-        // Bouton Programme CTA : défilement fluide vers #prix
-        const programmeCta = document.getElementById("programme-cta");
-        if (programmeCta) {
-          programmeCta.setAttribute("href", "#prix");
-          programmeCta.removeAttribute("target");
-          programmeCta.removeAttribute("rel");
-        }
-
-        // Bouton barre sticky mobile : défilement fluide vers #prix
-        const stickyCta = document.getElementById("sticky-cta-btn");
-        if (stickyCta) {
-          stickyCta.setAttribute("href", "#prix");
-          stickyCta.removeAttribute("target");
-          stickyCta.removeAttribute("rel");
-        }
-
-        // Bouton Closing CTA : défilement fluide vers #prix
-        const closingCta = document.getElementById("closing-cta");
-        if (closingCta) {
-          closingCta.setAttribute("href", "#prix");
-          closingCta.removeAttribute("target");
-          closingCta.removeAttribute("rel");
-        }
+        // Boutons de défilement : défilent vers le prix sans ajouter #prix dans la barre d'adresse
+        const scrollCtaIds = ["hero-cta", "programme-cta", "sticky-cta-btn", "closing-cta"];
+        scrollCtaIds.forEach(id => {
+          const btn = document.getElementById(id);
+          if (btn) {
+            btn.setAttribute("href", "#prix");
+            btn.removeAttribute("target");
+            btn.removeAttribute("rel");
+            btn.onclick = scrollToPrix;
+          }
+        });
       }
 
       applyDeviceCtaRoutes();
