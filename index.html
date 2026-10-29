@@ -150,6 +150,17 @@
       box-shadow: 0 0 22px rgba(245, 197, 66, 0.9) !important;
       transform: scale(1.15);
     }
+
+    /* Mode Page de Remerciement (?achat=succes) */
+    #thank-you-page {
+      display: none;
+    }
+    html.is-thank-you-page body > *:not(#thank-you-page):not(script):not(noscript):not(#legal-modal) {
+      display: none !important;
+    }
+    html.is-thank-you-page #thank-you-page {
+      display: flex !important;
+    }
   </style>
 
   <!-- Meta Pixel Code -->
@@ -165,6 +176,7 @@
   fbq('init', '2190059658556804');
   fbq('track', 'PageView');
   if (new URLSearchParams(window.location.search).get('achat') === 'succes') {
+    document.documentElement.classList.add('is-thank-you-page');
     fbq('track', 'Purchase', { value: 99.00, currency: 'EUR' });
   }
   </script>
@@ -177,6 +189,75 @@
   src="https://www.facebook.com/tr?id=2190059658556804&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code (noscript) -->
+
+  <!-- =========================================================================
+       PAGE DE REMERCIEMENT (?achat=succes)
+  ========================================================================= -->
+  <main id="thank-you-page" class="min-h-screen w-full flex-col items-center justify-center px-4 py-6 sm:px-8 sm:py-8 relative overflow-hidden bg-bgDark">
+    <!-- Glow & Idéogramme en filigrane -->
+    <div class="hero-radial-glow absolute inset-0 pointer-events-none"></div>
+    <div class="watermark-chinese absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 text-[180px] sm:text-[320px] font-black text-white/[0.02] select-none pointer-events-none leading-none">
+      福
+    </div>
+
+    <div class="relative z-10 w-full max-w-xl rounded-3xl bg-gradient-to-b from-[#16131A] via-[#121216] to-[#0B0B0D] border-2 border-gold/60 p-5 sm:p-8 text-center shadow-2xl shadow-black">
+      <!-- Icône de confirmation -->
+      <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-emerald-500/15 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-[0_0_25px_rgba(52,211,153,0.3)]">
+        <i data-lucide="check-circle-2" class="w-8 h-8 sm:w-9 sm:h-9"></i>
+      </div>
+
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-[11px] sm:text-xs font-mono font-bold uppercase tracking-widest mb-3">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>Inscription Confirmée • 6ème Cohorte</span>
+      </div>
+
+      <!-- Titre de Félicitations -->
+      <h1 class="font-display text-4xl sm:text-5xl md:text-6xl text-white uppercase tracking-tight leading-[0.95] mb-3">
+        FÉLICITATIONS ! <br>
+        <span class="text-gold">BIENVENUE DANS L'AVENTURE</span>
+      </h1>
+
+      <p class="text-xs sm:text-base text-textMain/90 leading-relaxed max-w-lg mx-auto mb-5">
+        Ta place pour <strong class="text-white">« 5 Jours pour Décoder le Chinois »</strong> est officiellement réservée ! Je suis ravi de t'accompagner en direct <strong class="text-gold config-dates-cohorte">Du 3 au 7 Novembre</strong>.
+      </p>
+
+      <!-- Encadré Action Immédiate : Groupe WhatsApp -->
+      <div class="p-4 sm:p-6 rounded-2xl bg-bgCard border border-emerald-500/30 mb-5 text-center">
+        <span class="inline-block text-[10px] sm:text-xs font-mono uppercase tracking-widest text-emerald-400 font-bold mb-3">
+          ⚡ ÉTAPE N°1 OBLIGATOIRE MAINTENANT
+        </span>
+
+        <a
+          id="whatsapp-cta-btn"
+          href="https://chat.whatsapp.com/B7S9MKog8NMBcJHIdOsAeQ?mode=gi_t"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-full py-3.5 sm:py-4 px-5 sm:px-8 rounded-2xl bg-[#25D366] hover:bg-[#20BD5A] text-[#0B0B0D] font-display text-xl sm:text-2xl tracking-wider uppercase font-black inline-flex items-center justify-center gap-2.5 shadow-[0_0_25px_rgba(37,211,102,0.4)] hover:scale-[1.01] active:scale-[0.99] transition-all"
+        >
+          <i data-lucide="message-circle" class="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"></i>
+          <span>REJOINDRE LE GROUPE WHATSAPP</span>
+        </a>
+      </div>
+
+      <!-- Récapitulatif des prochaines étapes -->
+      <div class="text-left bg-bgDark/80 rounded-2xl border border-white/[0.06] p-3.5 sm:p-4 space-y-2.5 text-xs sm:text-sm text-textMuted mb-4">
+        <div class="flex items-start gap-2.5">
+          <i data-lucide="mail" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>
+          <span><strong class="text-white">Vérifie ta boîte e-mail</strong> (ainsi que tes spams) : ton reçu de paiement et les instructions d'accès à tes 7 bonus arrivent d'ici quelques minutes.</span>
+        </div>
+        <div class="flex items-start gap-2.5">
+          <i data-lucide="calendar-check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>
+          <span><strong class="text-white">Bloque ton agenda :</strong> Rendez-vous chaque soir <span class="text-white font-semibold config-dates-cohorte">Du 3 au 7 Novembre</span> à <span class="text-gold font-semibold config-horaire">19h Paris</span> en direct sur Zoom.</span>
+        </div>
+      </div>
+
+      <a href="/" class="inline-flex items-center gap-1.5 text-xs font-mono text-textMuted hover:text-gold transition-colors">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+        <span>Retourner à la page de présentation</span>
+      </a>
+    </div>
+  </main>
 
   <!-- =========================================================================
        1. HERO SECTION (Simplifiée & Épurée)
@@ -258,7 +339,7 @@
           </div>
           <div>
             <div class="font-bold text-white text-[11px] sm:text-xs">1h30 de live / jour</div>
-            <div class="text-textMuted text-[10px] sm:text-[11px] config-horaire">20h Paris</div>
+            <div class="text-textMuted text-[10px] sm:text-[11px] config-horaire">19h Paris</div>
           </div>
         </div>
 
@@ -1355,7 +1436,7 @@
           <div class="w-full max-w-lg bg-bgDark/80 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/[0.08] p-3 sm:p-5 mb-3 sm:mb-6 text-left space-y-1.5 sm:space-y-2.5">
             <div class="flex items-center gap-2.5 text-xs sm:text-sm text-textMain">
               <i data-lucide="calendar" class="w-4 h-4 sm:w-5 sm:h-5 text-gold flex-shrink-0"></i>
-              <span><strong>Session officielle :</strong> Du 3 au 7 Novembre (20h Paris)</span>
+              <span><strong>Session officielle :</strong> Du 3 au 7 Novembre (<span class="config-horaire">19h Paris</span>)</span>
             </div>
             <div class="flex items-center gap-2.5 text-xs sm:text-sm text-textMain">
               <i data-lucide="check-circle-2" class="w-4 h-4 sm:w-5 sm:h-5 text-gold flex-shrink-0"></i>
@@ -1473,7 +1554,7 @@
           </span>
         </summary>
         <p class="mt-4 text-sm sm:text-base text-textMuted leading-relaxed border-t border-white/[0.04] pt-4">
-          Chaque soir, <strong class="text-white config-horaire">20h00 Paris</strong>, pendant 1h30, en direct sur Zoom.
+          Chaque soir à <strong class="text-white">19h Paris / Cotonou</strong> (18h Abidjan / Dakar), pendant 1h30, en direct sur Zoom.
         </p>
       </details>
 
@@ -1723,7 +1804,7 @@
       DATES_COHORTE: "Du 3 au 7 Novembre",
 
       // 3. Horaires des lives quotidiens
-      HORAIRE: "20h00 Paris",
+      HORAIRE: "19h Paris",
 
       // 4. ID YouTube de la vidéo de présentation
       YOUTUBE_ID: "SSmWfMIPcME",
@@ -1733,6 +1814,9 @@
 
       // 6. Nombre maximum de places pour l'accès aux 7 bonus
       PLACES_MAX: "30",
+
+      // 7. Lien d'invitation du groupe WhatsApp privé des inscrits
+      WHATSAPP_LINK: "https://chat.whatsapp.com/B7S9MKog8NMBcJHIdOsAeQ?mode=gi_t",
     };
 
     /**
@@ -1762,6 +1846,11 @@
       document.querySelectorAll(".config-dates-cohorte").forEach(el => el.textContent = CONFIG.DATES_COHORTE);
       document.querySelectorAll(".config-horaire").forEach(el => el.textContent = CONFIG.HORAIRE);
       document.querySelectorAll(".config-places-max").forEach(el => el.textContent = CONFIG.PLACES_MAX);
+
+      const whatsappBtn = document.getElementById("whatsapp-cta-btn");
+      if (whatsappBtn && CONFIG.WHATSAPP_LINK) {
+        whatsappBtn.setAttribute("href", CONFIG.WHATSAPP_LINK);
+      }
 
       // 2. Gestion adaptative des boutons "JE M'INSCRIS" + Tracking Meta Pixel :
       // - Défilement fluide vers #prix sans polluer l'URL du navigateur (évite de réouvrir sur le prix au rechargement)
