@@ -151,9 +151,32 @@
       transform: scale(1.15);
     }
   </style>
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2190059658556804');
+  fbq('track', 'PageView');
+  if (new URLSearchParams(window.location.search).get('achat') === 'succes') {
+    fbq('track', 'Purchase', { value: 99.00, currency: 'EUR' });
+  }
+  </script>
+  <!-- End Meta Pixel Code -->
 </head>
 
 <body class="bg-bgDark text-textMain font-sans antialiased selection:bg-chineseRed selection:text-white overflow-x-hidden">
+  <!-- Meta Pixel Code (noscript) -->
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=2190059658556804&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code (noscript) -->
 
   <!-- =========================================================================
        1. HERO SECTION (Simplifiée & Épurée)
@@ -1740,11 +1763,20 @@
       document.querySelectorAll(".config-horaire").forEach(el => el.textContent = CONFIG.HORAIRE);
       document.querySelectorAll(".config-places-max").forEach(el => el.textContent = CONFIG.PLACES_MAX);
 
-      // 2. Gestion adaptative des boutons "JE M'INSCRIS" :
+      // 2. Gestion adaptative des boutons "JE M'INSCRIS" + Tracking Meta Pixel :
       // - Défilement fluide vers #prix sans polluer l'URL du navigateur (évite de réouvrir sur le prix au rechargement)
-      // - Seul le bouton central DANS la section #prix ouvre la page de paiement Stripe Checkout
+      // - Déclenchement de ViewContent sur hero-cta, programme-cta et sticky-cta-btn
+      // - Seul le bouton central DANS la section #prix ouvre la page de paiement Stripe Checkout et déclenche InitiateCheckout
+      const viewContentCtaIds = ["hero-cta", "programme-cta", "sticky-cta-btn"];
+
       function scrollToPrix(e) {
-        if (e) e.preventDefault();
+        if (e) {
+          e.preventDefault();
+          const btnId = e.currentTarget && e.currentTarget.id;
+          if (viewContentCtaIds.includes(btnId) && typeof window.fbq === "function") {
+            window.fbq("track", "ViewContent", { value: 99.00, currency: "EUR" });
+          }
+        }
         const prixSection = document.getElementById("prix");
         if (prixSection) {
           prixSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1752,13 +1784,17 @@
       }
 
       function applyDeviceCtaRoutes() {
-        // Bouton centralisé dans la section #prix : mène toujours directement vers Stripe
+        // Bouton centralisé dans la section #prix : mène toujours directement vers Stripe + déclenche InitiateCheckout
         const prixCta = document.querySelector("#prix .stripe-cta-link");
         if (prixCta) {
           prixCta.setAttribute("href", CONFIG.STRIPE_LINK);
           prixCta.setAttribute("target", "_blank");
           prixCta.setAttribute("rel", "noopener noreferrer");
-          prixCta.onclick = null;
+          prixCta.onclick = () => {
+            if (typeof window.fbq === "function") {
+              window.fbq("track", "InitiateCheckout", { value: 99.00, currency: "EUR" });
+            }
+          };
         }
 
         // Boutons de défilement : défilent vers le prix sans ajouter #prix dans la barre d'adresse
